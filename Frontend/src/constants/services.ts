@@ -41,6 +41,22 @@ export const SERVICE_VIDEO_CONFIG: Record<string, { videoId: string; startTime?:
   '15-minute-consultation': {
     videoId: 'EPnOzGGTStw',
     startTime: 0
+  },
+  'anonymous': {
+    videoId: 'Edik2YlRBl4',
+    startTime: 0
+  },
+  '1st-appeal': {
+    videoId: 'Edik2YlRBl4',
+    startTime: 0
+  },
+  'bulk': {
+    videoId: 'ul1W-DEXatA',
+    startTime: 0
+  },
+  'custom-rti': {
+    videoId: 'ou1yNxyb0qI',
+    startTime: 0
   }
 };
 

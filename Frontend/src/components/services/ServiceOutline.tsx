@@ -117,17 +117,25 @@ export const ServiceOutline: React.FC = React.memo(() => {
 
       {/* Demo Image */}
       <div className="mt-8">
-        <img
-          src="/images/Demo.webp"
-          alt="Service Demo"
-          className="w-full h-auto rounded-lg shadow-md"
-          style={{ objectFit: 'contain' }}
-          draggable="false"
-          loading="lazy"
-          width="800"
-          height="600"
-          decoding="async"
-        />
+        <a
+          href="https://youtube.com/playlist?list=PL8-Am5i71CmP-OVAlyyhDwj3f2WRgQ-8n&si=2n3gRaGSNxo900PY"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block cursor-pointer hover:opacity-90 transition-opacity"
+          aria-label="Watch RTI service videos on YouTube"
+        >
+          <img
+            src="/images/Demo.webp"
+            alt="Service Demo"
+            className="w-full h-auto rounded-lg shadow-md"
+            style={{ objectFit: 'contain' }}
+            draggable="false"
+            loading="lazy"
+            width="800"
+            height="600"
+            decoding="async"
+          />
+        </a>
       </div>
     </div>
   );

@@ -72,9 +72,9 @@ export const TelanganaServicesGrid: React.FC = () => {
 
   return (
     <section className="bg-gray-50 py-12 md:py-16 lg:py-20">
-      <div className="container-responsive max-w-7xl mx-auto">
-        <div className="text-center mb-10 md:mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+      <div className="container-responsive max-w-6xl mx-auto px-4">
+        <div className="text-center mb-6 md:mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3">
             Our RTI Services for Telangana
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -82,45 +82,43 @@ export const TelanganaServicesGrid: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {services.map((service) => (
             <div
               key={service.id}
-              className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-7 lg:p-8 hover:shadow-lg hover:border-primary-400 transition-all duration-200 flex flex-col h-full"
+              className="bg-white rounded-xl shadow-md border border-gray-200 p-3 md:p-4 hover:shadow-lg hover:border-primary-400 transition-all duration-200 flex flex-col h-full group"
             >
-              <div className="flex flex-col items-center text-center h-full">
-                {/* Icon */}
-                <div className="flex justify-center mb-4">
-                  <div className="h-14 w-14 md:h-16 md:w-16 rounded-full bg-blue-50 flex items-center justify-center">
-                    <img
-                      src={service.icon}
-                      alt={service.name}
-                      className="h-10 w-10 md:h-12 md:w-12 object-contain"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-
-                {/* Title */}
-                <h3 className="mt-2 mb-1 text-lg md:text-xl font-semibold text-gray-900">
-                  {service.name}
-                </h3>
-
-                {/* Description */}
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed mt-1 mb-4 flex-grow">
-                  {service.description}
-                </p>
-
-                {/* Button */}
-                <div className="mt-auto w-full">
-                  <button
-                    onClick={() => navigate(service.route)}
-                    className="w-full px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md"
-                  >
-                    {service.buttonText}
-                  </button>
-                </div>
+              {/* Icon Section - extends beyond card boundaries with height limit */}
+              <div className="mb-1.5 flex flex-col items-center -mx-3 md:-mx-4 -mt-3 md:-mt-4">
+                <img
+                  src={service.icon}
+                  loading="lazy"
+                  decoding="async"
+                  width="200"
+                  height="200"
+                  alt={service.name}
+                  className="w-full h-auto object-contain"
+                  style={{ maxHeight: '100px', objectFit: 'contain' }}
+                />
               </div>
+
+              {/* Title */}
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1.5 text-center leading-tight">
+                {service.name}
+              </h3>
+
+              {/* Description */}
+              <p className="text-gray-600 mb-3 flex-grow leading-relaxed text-center text-sm md:text-base">
+                {service.description}
+              </p>
+
+              {/* CTA Button */}
+              <button
+                onClick={() => navigate(service.route)}
+                className="w-full px-4 py-2.5 md:py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md mt-auto"
+              >
+                {service.buttonText}
+              </button>
             </div>
           ))}
         </div>

@@ -120,7 +120,7 @@ export const TelanganaConsultationForm: React.FC = () => {
   };
 
   return (
-    <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-10">
+    <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-12 md:py-16 lg:py-20">
       <div className="max-w-full md:max-w-2xl lg:max-w-4xl mx-auto px-4 md:px-6 lg:px-10">
         <div className="text-center mb-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">

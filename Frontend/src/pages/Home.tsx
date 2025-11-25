@@ -73,7 +73,7 @@ export const Home: React.FC = () => {
   const dataToUse = deferredStateData || stateData;
 
   // SEO Metadata - use current data
-  const pageTitle = `FileMyRTI – File RTI Online in Telangana | Telangana RTI Filing Services`;
+  const pageTitle = `File RTI Online in Telangana - FileMyRTI`;
   const pageDescription = `File RTI online in Telangana with FileMyRTI. Get expert-drafted RTI applications and appeals for Telangana Government departments, Secretariat and district offices from home.`;
   const canonicalUrl = typeof window !== 'undefined' ? window.location.href : `https://filemyrti.com/`;
   const ogImage = `https://filemyrti.com/src/assets/icons/logo.webp`;

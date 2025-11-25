@@ -657,16 +657,16 @@ export const RTIModelPage: React.FC = () => {
 
                       {/* Service Image */}
                       {serviceImage && (
-                        <div className="mb-8">
+                        <div className="mb-8 md:mb-12">
                           <img
                             src={serviceImage}
                             alt={`${model.name} service illustration showing features and benefits`}
-                            className="w-full h-auto rounded-lg shadow-md"
-                            style={{ objectFit: 'contain' }}
+                            className="w-full h-auto rounded-lg shadow-lg max-w-6xl mx-auto"
+                            style={{ objectFit: 'contain', minHeight: '450px' }}
                             draggable="false"
                             loading="lazy"
-                            width="800"
-                            height="600"
+                            width="1200"
+                            height="800"
                             decoding="async"
                           />
                         </div>

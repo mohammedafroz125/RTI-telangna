@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getPDFPath } from '../../utils/pdfMapping';
+import { getPDFPath, getStateFromDepartment } from '../../utils/pdfMapping';
 
 interface PDFDownloadModalProps {
   isOpen: boolean;
@@ -116,9 +116,9 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
       });
 
       // Download the PDF - try multiple approaches
-      // Extract category and filename from pdfPath (format: "delhi/category/filename.pdf")
+      // Extract state, category and filename from pdfPath (format: "state/category/filename.pdf")
       const pathParts = pdfPath.split('/');
-      // Skip "delhi" part, category is at index 1, filename is at index 2
+      const state = pathParts[0]; // e.g., "delhi" or "telangana"
       const category = encodeURIComponent(pathParts[1]);
       const filename = encodeURIComponent(pathParts[2]);
 
@@ -127,7 +127,7 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
 
       // Approach 1: Try backend API (with timeout)
       try {
-        const apiUrl = `${apiBaseUrl}/api/v1/pdf/${category}/${filename}`;
+        const apiUrl = `${apiBaseUrl}/api/v1/pdf/${state}/${category}/${filename}`;
 
         // Create a timeout promise
         const timeoutPromise = new Promise((_, reject) =>
@@ -144,9 +144,15 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
           const blob = await response.blob();
           const url = window.URL.createObjectURL(blob);
 
+          // Create download filename by removing state prefix
+          const downloadFilename = departmentName
+            .replace(/RTI\s+(Delhi|Telangana)\s+/gi, '')
+            .replace(/\s+/g, '_')
+            .concat('.pdf');
+
           const link = document.createElement('a');
           link.href = url;
-          link.download = `${departmentName.replace(/RTI\s+Delhi\s+/gi, '').replace(/\s+/g, '_')}.pdf`;
+          link.download = downloadFilename;
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
@@ -168,7 +174,7 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
           // Try public folder path - decode the category and filename for the path
           const decodedCategory = decodeURIComponent(category);
           const decodedFilename = decodeURIComponent(filename);
-          const publicPath = `/assets/PDF/delhi/${decodedCategory}/${decodedFilename}`;
+          const publicPath = `/assets/PDF/${state}/${decodedCategory}/${decodedFilename}`;
 
           const response = await fetch(publicPath);
 
@@ -176,9 +182,15 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
 
+            // Create download filename by removing state prefix
+            const downloadFilename = departmentName
+              .replace(/RTI\s+(Delhi|Telangana)\s+/gi, '')
+              .replace(/\s+/g, '_')
+              .concat('.pdf');
+
             const link = document.createElement('a');
             link.href = url;
-            link.download = `${departmentName.replace(/RTI\s+Delhi\s+/gi, '').replace(/\s+/g, '_')}.pdf`;
+            link.download = downloadFilename;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -202,9 +214,15 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
           const pdfModule = await import(`../../assets/PDF/${pdfPath}`);
           const pdfUrl = pdfModule.default || pdfModule;
 
+          // Create download filename by removing state prefix
+          const downloadFilename = departmentName
+            .replace(/RTI\s+(Delhi|Telangana)\s+/gi, '')
+            .replace(/\s+/g, '_')
+            .concat('.pdf');
+
           const link = document.createElement('a');
           link.href = pdfUrl;
-          link.download = `${departmentName.replace(/RTI\s+Delhi\s+/gi, '').replace(/\s+/g, '_')}.pdf`;
+          link.download = downloadFilename;
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);

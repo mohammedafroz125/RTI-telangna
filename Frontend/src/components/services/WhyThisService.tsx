@@ -110,16 +110,16 @@ export const WhyThisService: React.FC<WhyThisServiceProps> = React.memo(({ servi
 
       {/* Service Image X version inside Why This Service box */}
       {serviceImageX && (
-        <div className="mt-8">
+        <div className="mt-8 md:mt-10">
           <img
             src={serviceImageX}
             alt={`${serviceName || 'RTI Service'} - Features`}
-            className="w-full h-auto rounded-lg shadow-md"
-            style={{ objectFit: 'contain' }}
+            className="w-full h-auto rounded-lg shadow-lg max-w-5xl mx-auto"
+            style={{ objectFit: 'contain', minHeight: '400px' }}
             draggable="false"
             loading="lazy"
-            width="800"
-            height="600"
+            width="1200"
+            height="800"
             decoding="async"
           />
         </div>

@@ -13,19 +13,29 @@ const logger = require('../utils/logger');
 const PDF_BASE_PATH = path.join(__dirname, '../../Frontend/src/assets/PDF');
 
 /**
- * GET /api/v1/pdf/:category/:filename
+ * GET /api/v1/pdf/:state/:category/:filename
  * Serve PDF file for download
+ * Supports both delhi and telangana states
  */
-router.get('/:category/:filename', async (req, res) => {
+router.get('/:state/:category/:filename', async (req, res) => {
   try {
-    const { category, filename } = req.params;
+    const { state, category, filename } = req.params;
 
     // Sanitize inputs to prevent path traversal
+    const safeState = path.basename(state);
     const safeCategory = path.basename(category);
     const safeFilename = path.basename(filename);
 
+    // Validate state (only allow delhi or telangana)
+    if (safeState !== 'delhi' && safeState !== 'telangana') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid state. Only "delhi" and "telangana" are supported.',
+      });
+    }
+
     // Construct file path
-    const filePath = path.join(PDF_BASE_PATH, 'delhi', safeCategory, safeFilename);
+    const filePath = path.join(PDF_BASE_PATH, safeState, safeCategory, safeFilename);
 
     // Check if file exists
     try {
@@ -46,7 +56,7 @@ router.get('/:category/:filename', async (req, res) => {
     const fileStream = require('fs').createReadStream(filePath);
     fileStream.pipe(res);
 
-    logger.info(`PDF served: ${safeCategory}/${safeFilename}`);
+    logger.info(`PDF served: ${safeState}/${safeCategory}/${safeFilename}`);
   } catch (error) {
     logger.error('Error serving PDF:', error);
     res.status(500).json({
