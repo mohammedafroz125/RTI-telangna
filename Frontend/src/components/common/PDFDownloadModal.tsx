@@ -142,6 +142,27 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
 
         if (response && response.ok) {
           const blob = await response.blob();
+          
+          // Validate blob size (PDFs should be at least a few KB)
+          if (blob.size < 1000) {
+            throw new Error('Downloaded file is too small to be a valid PDF');
+          }
+
+          // Validate Content-Type or check PDF signature
+          const contentType = response.headers.get('content-type');
+          const isContentTypePDF = contentType && contentType.includes('application/pdf');
+          
+          if (!isContentTypePDF) {
+            // Check if it's actually a PDF by reading first bytes (PDF files start with %PDF)
+            const arrayBuffer = await blob.slice(0, 4).arrayBuffer();
+            const uint8Array = new Uint8Array(arrayBuffer);
+            const isPDF = uint8Array[0] === 0x25 && uint8Array[1] === 0x50 && uint8Array[2] === 0x44 && uint8Array[3] === 0x46;
+            
+            if (!isPDF) {
+              throw new Error('Response is not a valid PDF file (received HTML or other content instead)');
+            }
+          }
+
           const url = window.URL.createObjectURL(blob);
 
           // Create download filename by removing state prefix
@@ -180,6 +201,21 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
 
           if (response.ok) {
             const blob = await response.blob();
+            
+            // Validate blob is actually a PDF
+            const arrayBuffer = await blob.slice(0, 4).arrayBuffer();
+            const uint8Array = new Uint8Array(arrayBuffer);
+            const isPDF = uint8Array[0] === 0x25 && uint8Array[1] === 0x50 && uint8Array[2] === 0x44 && uint8Array[3] === 0x46;
+            
+            if (!isPDF) {
+              throw new Error('File from public folder is not a valid PDF');
+            }
+
+            // Validate blob size
+            if (blob.size < 1000) {
+              throw new Error('Downloaded file is too small to be a valid PDF');
+            }
+
             const url = window.URL.createObjectURL(blob);
 
             // Create download filename by removing state prefix
