@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getPDFPath, getStateFromDepartment } from '../../utils/pdfMapping';
+import { getPDFPath } from '../../utils/pdfMapping';
 
 interface PDFDownloadModalProps {
   isOpen: boolean;

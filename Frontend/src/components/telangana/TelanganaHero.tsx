@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import charminarImage from '../../assets/images/charminar.webp';
 
@@ -8,7 +7,6 @@ interface TelanganaHeroProps {
 }
 
 export const TelanganaHero: React.FC<TelanganaHeroProps> = ({ stateName }) => {
-  const navigate = useNavigate();
 
   const stats = [
     { value: '50,000+', label: 'RTIs Filed' },
